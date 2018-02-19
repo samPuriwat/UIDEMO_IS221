@@ -1,9 +1,11 @@
 package sample;
 
+import Admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -32,7 +34,7 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         if (this.loginmodel.isDatabaseConnection()) {
-            System.out.println("Test");
+            //System.out.println("Test");
             this.dbStatus.setText("Connected to DB");
         } else {
             this.dbStatus.setText("Not Connected to DB");
@@ -43,7 +45,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void Login(ActionEvent event){
-        System.out.println(this.username.getText());
+       // System.out.println(this.username.getText());
         try {
             if (this.loginmodel.isLogin(this.username.getText(),
                     this.password.getText())) {
@@ -54,8 +56,9 @@ public class Controller implements Initializable {
 
 
             } else {
-                JOptionPane.showMessageDialog(null, "Your username or " +
-                        "password is not corrected.");
+                JOptionPane.showMessageDialog(null,
+                        "Your username or " +
+                        "password is invalid.");
             }
         } catch (Exception localException) {
             localException.printStackTrace();
@@ -64,18 +67,29 @@ public class Controller implements Initializable {
     }//Login
 
     private void adminLogin() {
-//        try {
-//            Stage adminStage = new Stage();
-//            FXMLLoader adminLoader = new FXMLLoader();
-//            Pane adminRoot = (Pane)adminLoader.load(getClass().getResource("" +
-//                    "/Admin/AdminDashBoard.fxml").openStream());
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
+        //        JOptionPane.showMessageDialog(null,
+//                "Welcome to Our System.");
+        try {
+            Stage adminStage = new Stage();
+            FXMLLoader adminLoader = new FXMLLoader();
+            Pane adminRoot = (Pane)adminLoader.load(getClass().getResource("" +
+                    "/Admin/AdminDashBoard.fxml").openStream());
 
-        JOptionPane.showMessageDialog(null, "Welcome to Our System.");
+            AdminController adminController =
+                    (AdminController) adminLoader.getController();
+            Scene scene = new Scene(adminRoot);
+            adminStage.setScene(scene);
+            adminStage.setTitle("Admin Dashboard");
+            adminStage.setResizable(false);
+            adminStage.show();
 
-    }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+
+    }//adminLogin
 
 
 }

@@ -21,6 +21,7 @@ public class loginModel {
         }
     }
     public boolean isDatabaseConnection(){
+
         return this.connection != null;
     }
 
